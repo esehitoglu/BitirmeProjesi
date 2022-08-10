@@ -1,0 +1,347 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        <meta charset="UTF-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no" />
+        <meta name="description" content="" />
+        <meta name="author" content="" />
+        <title>{% block title %}Sepet{% endblock %}</title>
+        <link rel="icon" href="data:image/svg+xml,<svg xmlns=%22http://www.w3.org/2000/svg%22 viewBox=%220 0 128 128%22><text y=%221.2em%22 font-size=%2296%22>⚫️</text></svg>">
+        {# Run `composer require symfony/webpack-encore-bundle` to start using Symfony UX #}
+        {% block stylesheets %}
+            <link rel="stylesheet" href="/css/basket.css">
+            <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-EVSTQN3/azprG1Anm3QDgpJLIm9Nao0Yz1ztcQTwFspd3yD65VohhpuuCOmLASjC" crossorigin="anonymous">
+            <link href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.5.0/font/bootstrap-icons.css" rel="stylesheet" />
+            <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.1.2/css/all.min.css" integrity="sha512-1sCRPdkRXhBV2PBLUdRb4tMg1w2YPf37qatUFeS7zlBy7jJI8Lf4VHwWfZZfpXtYSLy85pkm9GaYVYMfw5BC1A==" crossorigin="anonymous" referrerpolicy="no-referrer" />
+        {% endblock %}
+       
+    </head>
+    <body class="">
+    {% block body %}
+
+    <section class="h-100 gradient-custom">
+    <div class="container py-5">
+        <div class="row d-flex justify-content-center my-4">
+        <div class="col-md-8">
+            <div class="card mb-4">
+            <div class="card-header py-3">
+                <h5 class="mb-0 cartItem">Cart -   items</h5>
+            </div>
+            <div class="card-body">
+                <!-- Single item -->
+                {% if basket == "sepet boş" %}
+                    <h3>{{ basket }}</h3>
+                {% endif %}
+
+                {% for item in basket %}
+                <div class="row">
+                <div class="col-lg-3 col-md-12 mb-4 mb-lg-0">
+  
+                    <!-- Image -->
+                    <div class="bg-image hover-overlay hover-zoom ripple rounded" data-mdb-ripple-color="light">
+                    <img src="http://127.0.0.1:8000/uploads/images/products/{{ item.image }}"
+                        class="w-100" alt="Blue Jeans Jacket" />
+                    <a href="#!">
+                        <div class="mask" style="background-color: rgba(251, 251, 251, 0.2)"></div>
+                    </a>
+                    </div>
+                    <!-- Image -->
+                </div>
+
+                
+                <div class="col-lg-5 col-md-6 mb-4 mb-lg-0">
+                    <!-- Data -->
+                    <p><strong class="productName">{{ item.productName }}</strong></p>
+                    <p>{{ item.productContent }}</p>
+                    <div class="category">
+                    {% for i in item.category %}
+                    Category: <p class="categoryName">{{ i.name }}</p>
+                    {% endfor %}
+                    </div>
+
+                    <!--
+                    <button type="button" class="btn btn-primary btn-sm me-1 mb-2" data-mdb-toggle="tooltip"
+                    title="Remove item">
+                    <i class="fas fa-trash"></i>
+                    </button>
+                    -->
+                    <a class="btn btn-primary btn-sm me-1 mb-2 basket_remove" href="basket/{{ item.id }}" data-mdb-toggle="tooltip">
+                        <i class="fas fa-trash"></i>
+                    </a>
+                    <button type="button" class="btn btn-danger btn-sm mb-2" data-mdb-toggle="tooltip"
+                    title="Move to the wish list">
+                    <i class="fas fa-heart"></i>
+                    </button>
+                    <!-- Data -->
+                    
+                </div>
+
+                <div class="col-lg-4 col-md-6 mb-4 mb-lg-0 ustclass">
+                    <!-- Quantity -->
+                    <div class="d-flex mb-4" style="max-width: 300px">
+                    <button class="btn btn-primary quantity_btn px-2 me-2"
+                        onclick="this.parentNode.querySelector('input[type=number]').stepDown()">
+                        <i class="fas fa-minus"></i>
+                    </button>
+
+                    <div class="form-outline">
+                        <input id="form1" min="0" name="quantity" value="1" type="number" class="form-control quantityValue" />
+                        <label class="form-label" for="form1">Quantity</label>
+                    </div>
+
+                    <button class="btn btn-warning quantity_btn px-2 ms-2"
+                        onclick="this.parentNode.querySelector('input[type=number]').stepUp()">
+                        <i class="fas fa-plus"></i>
+                    </button>
+                    </div>
+                    <!-- Quantity -->
+
+                    <!-- Price -->
+                    <p class="text-start text-md-center">
+                    <strong class="dolar">$</strong><strong class="priceValue">{{ item.productPrice }}</strong>
+                    <strong style="display:block" class="invisible constPriceValue">{{ item.productPrice }}</strong>
+                    </p>
+                    <!-- Price -->
+                   
+                </div>
+                </div>
+                <hr class="my-4" />
+                 {% endfor %}
+                <!-- Single item -->
+
+            </div>
+            </div>
+            <div class="card mb-4">
+            <div class="card-body">
+                <p><strong>Expected shipping delivery</strong></p>
+                <p class="mb-0">{{ "now"|date("d/m/Y") }}</p>
+            </div>
+            </div>
+            <div class="card mb-4 mb-lg-0">
+            <div class="card-body">
+                <p><strong>We accept</strong></p>
+                <img class="me-2" width="45px"
+                src="https://mdbcdn.b-cdn.net/wp-content/plugins/woocommerce-gateway-stripe/assets/images/visa.svg"
+                alt="Visa" />
+                <img class="me-2" width="45px"
+                src="https://mdbcdn.b-cdn.net/wp-content/plugins/woocommerce-gateway-stripe/assets/images/amex.svg"
+                alt="American Express" />
+                <img class="me-2" width="45px"
+                src="https://mdbcdn.b-cdn.net/wp-content/plugins/woocommerce-gateway-stripe/assets/images/mastercard.svg"
+                alt="Mastercard" />
+                <img class="me-2" width="45px"
+                src="https://mdbcdn.b-cdn.net/wp-content/plugins/woocommerce/includes/gateways/paypal/assets/images/paypal.png"
+                alt="PayPal acceptance mark" />
+            </div>
+            </div>
+        </div>
+        <div class="col-md-4">
+            <div class="card mb-4">
+            <div class="card-header py-3">
+                <h5 class="mb-0">Summary</h5>
+            </div>
+            <div class="card-body">
+                <ul class="list-group list-group-flush">
+                <li
+                    class="list-group-item d-flex justify-content-between align-items-center border-0 px-0 pb-0">
+                    Products
+                    <span id="totalPrice1">$53.98</span>
+                </li>
+                <li class="list-group-item d-flex justify-content-between align-items-center px-0">
+                    Shipping
+                    <span>Gratis</span>
+                </li>
+                <li
+                    class="list-group-item d-flex justify-content-between align-items-center border-0 px-0 mb-3">
+                    <div>
+                    <strong>Total amount</strong>
+                    <strong>
+                        <p class="mb-0">(including VAT)</p>
+                    </strong>
+                    </div>
+                    <span><strong id="totalPrice2" class"totalPrice">$53.98</strong></span>
+                </li>
+                </ul>
+
+              
+                <a href="/orders" class="btn btn-primary btn-lg btn-block go_to_checkout">Go to checkout</a>
+               
+            </div>
+            </div>
+        </div>
+        </div>
+    </div>
+    </section>
+
+    {% endblock %}
+    </body>    
+</html>
+
+
+{% block javascripts %}
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/js/bootstrap.bundle.min.js" integrity="sha384-MrcW6ZMFYlzcLA8Nl+NtUVF0sA7MsXsP1UyJoMp4YLEuNSfAP+JcXn/tWtIaxVXM" crossorigin="anonymous"></script>
+        <!-- Copy JavaScript from https://getbootstrap.com/docs/5.0/getting-started/introduction/#js -->
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.6.0/jquery.min.js" integrity="sha512-894YE6QWD5I59HgZOGReFYm4dnWc1Qt5NtvYSaNcOP+u1T9qYdvdihz0PPSiiqn/+/3e7Jo4EaG7TubfWGUrMQ==" crossorigin="anonymous" referrerpolicy="no-referrer"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery-cookie/1.4.1/jquery.cookie.min.js" integrity="sha512-3j3VU6WC5rPQB4Ld1jnLV7Kd5xr+cq9avvhwqzbH/taCRNURoeEpoPBK9pDyeukwSxwRPJ8fDgvYXd6SkaZ2TA==" crossorigin="anonymous" referrerpolicy="no-referrer"></script>
+    <script src="https://cdn.jsdelivr.net/npm/axios/dist/axios.min.js"></script>
+    <script>
+
+        $( document ).ready(function() {
+            var basketCount = $.cookie("basketCount");
+            $('.cartItem').text( "Cart - "+basketCount+" items");
+            var flag = true;
+
+            function orders(){
+                var quantityArray=[];
+                var productNameArray=[];
+                var order = {
+                    elements: [],
+                };
+                var qv = $('.quantityValue').length;
+                for( var i=0; i<qv;i++ ){
+                    var productPiece = $('.quantityValue').eq(i).val();
+                    var productName = $('.productName').eq(i).text();
+
+                    quantityArray.push( parseInt(productPiece) );
+                    productNameArray.push( productName );
+
+                    order.elements.push({ "ürün adı: ":productName, "sipariş adedi: ": productPiece });
+                    
+                }
+                const orders = JSON.stringify(order.elements);
+                //console.log( orders );
+                $.cookie( "orders" , orders , { expires: 15 });
+            }
+            orders();
+
+            function totalPriceFunc(){
+                var x = $('.priceValue').length;
+                var priceArray=[];
+                var totalPrice=0;
+                
+                for( var i=0; i<x;i++ ){
+                    var price = $('.priceValue').eq(i).text();
+                    //console.log(price);
+                    priceArray.push( parseInt(price) );
+                }
+                
+                if (flag){
+                    const minPrice = Math.min(...priceArray); // 1
+                    //console.log(minPrice);
+                    const index = priceArray.indexOf(minPrice);
+                    //console.log(index);
+                    discount = minPrice/2;
+                    $('.dolar').eq(index).before("<strong style='text-decoration:line-through;color:black'>$"+minPrice+"</strong></br>");
+                    $('.priceValue').eq(index).text(discount).after("</br><strong class='text-dark bg-warning' style='display:block';'> %50 discount</strong>");
+                    $('.constPriceValue').eq(index).text(discount);
+                    priceArray[index] = discount;
+                    flag = false;
+                    //console.log(flag);
+                }
+                
+                priceArray.forEach(i=>{
+                    totalPrice += i;
+                })
+
+                //console.log(priceArray);
+                $('#totalPrice1').text('$'+(totalPrice/100).toFixed(2)); 
+                $('#totalPrice2').text('$'+(totalPrice/100).toFixed(2));
+                totalPrice = (totalPrice/100).toFixed(2);
+                
+                $.cookie( "ammount" , totalPrice , { expires: 15 });
+                //console.log( $.cookie( "ammount") );
+            }
+            totalPriceFunc();
+            
+            $( ".quantity_btn" ).click(function() {
+                var categories = [];
+                var quantityValue = $( this.parentNode.querySelector('input[type=number]') ).val();
+                //var priceValue = $(this).parent().parent('.ustclass').find('.priceValue').css( "background", "yellow" );
+                var constPriceValue = $(this).parent().parent('.ustclass').find('.constPriceValue').text();
+                console.log(constPriceValue);
+                var itemPrice = quantityValue * constPriceValue;
+                $(this).parent().parent('.ustclass').find('.priceValue').text(itemPrice);
+                //console.log(quantityValue);
+
+                // 3 al 1 öde
+                //var categoryName = $( this.parentNode.parentNode.parentNode.querySelector('.categoryName') ).text();
+                
+                var categoryLength = $( this.parentNode.parentNode.parentNode.querySelector('.category') ).find('p').length;
+
+                for( var i=0;i<categoryLength;i++ ){
+                    var categoryName = $( this.parentNode.parentNode.parentNode.querySelector('.category') ).find('p').eq(i).text();
+                    categories.push(categoryName);
+                    
+                }
+                let erkek = categories.includes("ERKEK");
+                let ayakkabi = categories.includes("AYAKKABI");
+
+                if( erkek && ayakkabi ){
+                    console.log("3 al 1 öde");
+                    if ( quantityValue%4 == 0  ){
+                        quantityValue--;
+                        console.log("indirim");
+                        console.log(quantityValue);
+                        var constPriceValue = $(this).parent().parent('.ustclass').find('.constPriceValue').text();
+                        console.log(constPriceValue);
+                        var itemPrice = quantityValue * constPriceValue;
+                        $(this).parent().parent('.ustclass').find('.priceValue').text(itemPrice);
+                    }
+                }
+                // 3 al 1 öde
+                
+                totalPriceFunc();
+                orders();
+            });
+
+        });
+
+        function removeBasket(event){
+            event.preventDefault();
+            const url = this.href;
+
+            axios.get(url).then(function(response){
+                basketCount = parseInt($.cookie( "basketCount"));
+                console.log( basketCount );
+                basketCount--;
+                $.cookie( "basketCount" , basketCount , { expires: 15 });
+                $('.cartItem').text( "Cart - "+basketCount+" items");
+                var basketId = $.cookie("ids");
+                basketId = basketId.split(",");
+                console.log( basketId);
+                remoteveItem = response.data.basket;
+                //console.log( typeof basketId );
+                //console.log( typeof remoteveItem );
+                const index = basketId.indexOf(`${remoteveItem}`);
+                basketId.splice(index,1);
+                //console.log(basketId);
+                $.cookie( "ids" , basketId , { expires: 15 });
+                location.reload();
+                //basketId = response.data.basket;
+                //itemCount.textContent = basketCount;
+                //console.log(basketId);
+
+                //$.cookie( "basketCount" , basketCount , { expires: 15 });
+                //console.log( $.cookie( "ids") );
+                //console.log( $.cookie( "basketCount") );
+            })
+        }
+
+        document.querySelectorAll('a.basket_remove').forEach(function(link){
+            link.addEventListener('click',removeBasket);  
+        })
+
+    </script>
+
+{% endblock %}
+
+
+
+
+    
+
+    
+   
+    
+ 
+

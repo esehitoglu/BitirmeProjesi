@@ -1,0 +1,17 @@
+# config/packages/easy_admin.yaml
+easy_admin:
+    entities:
+        Product:
+            form:
+                fields:
+                    - { property: 'imageFile', type: 'file' }
+                    - { property: 'imageFile', type: 'vich_image' }
+            # ...
+            list:
+                fields:
+                    - { property: 'image', type: 'image', base_path: '%app.path.product_images%' }
+            # ...
+            show:
+                fields:
+                    - { property: 'image', type: 'image', base_path: '%app.path.product_images%' }
+                    - { property: 'image', template: 'vich_uploader_image.html.twig' }
