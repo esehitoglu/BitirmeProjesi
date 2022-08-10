@@ -55,12 +55,6 @@ class ProductController extends AbstractController
         
         $product_category = $productRepository->productCategory($id);
 
-        if (!$product_category) {
-            throw $this->createNotFoundException(
-                'No product found for id '.$id
-            );
-        }
-
         return $this->render('product/productCategory.html.twig', [
             //'user_first_name' => $userFirstName,
             'product_category' => $product_category,

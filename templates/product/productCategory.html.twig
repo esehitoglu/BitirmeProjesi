@@ -174,7 +174,7 @@
                 //basketId = response.data.basket;
                 itemCount.textContent = basketCount;
                 //console.log(basketId);
-                $.cookie( "ids" , basketId , { expires: 15 });
+                $.cookie( "ids" , basketId , { expires: 15 , path: '/'});
                 $.cookie( "basketCount" , basketCount , { expires: 15 });
                 console.log( $.cookie( "ids") );
                 //console.log( $.cookie( "basketCount") );

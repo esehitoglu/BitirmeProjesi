@@ -28,6 +28,7 @@ class BasketController extends AbstractController
             });
         </script> <?php
         //setcookie("ids",0);
+        //dd($_COOKIE["ids"]);
         
         if( isset($_COOKIE["ids"]) ){
             $ids = $_COOKIE["ids"];
