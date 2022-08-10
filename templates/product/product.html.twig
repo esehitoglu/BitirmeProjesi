@@ -25,7 +25,7 @@
                 <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation"><span class="navbar-toggler-icon"></span></button>
                 <div class="collapse navbar-collapse" id="navbarSupportedContent">
                     <ul class="navbar-nav me-auto mb-2 mb-lg-0 ms-lg-4">
-                        <li class="nav-item"><a class="nav-link active" aria-current="page" href="/product">Home</a></li>
+                        <li class="nav-item"><a class="nav-link active" aria-current="page" href="/product">HOME</a></li>
                         {% for item in category %}
                         <li class="nav-item"><a class="nav-link" href="product/{{ item.id }}">{{ item.name }}</a></li>
                         {% endfor %}
@@ -55,7 +55,7 @@
             </div>
         </nav>
         <!-- Header-->
-        <header class="bg-info py-5">
+        <header class="bg-danger py-5">
             <div class="container px-4 px-lg-5 my-5">
                 <div class="text-center text-white">
                     <h1 class="display-4 fw-bolder">Shop in style</h1>
@@ -115,7 +115,7 @@
 
     {% endblock %}
     <!-- Footer-->
-        <footer class="py-5 bg-info">
+        <footer class="py-5 bg-danger">
             <div class="container"><p class="m-0 text-center text-white">Copyright &copy; Your Website 2022</p></div>
         </footer>
     </body>
@@ -144,7 +144,10 @@
         }
         if( $.cookie( "ids") ){
             basketId = $.cookie( "ids");
-            basketId = basketId.split(",");
+            console.log("olan ids yi çektim");
+            basketId = basketId.split(",").map(Number);
+            console.log( basketId );
+            console.log(typeof basketId[0]);
             /*
             console.log( basketId );
             console.log( typeof basketId );
@@ -159,25 +162,24 @@
             const itemCount = document.querySelector('span.badge');
 
             axios.get(url).then(function(response){
-                basketCount++;
+                
                 //console.log(response);
-                //addItem = response.data.basket;
-                //const index = basketId.indexOf(`${addItem}`);
-                //console.log(index);
-                /* Array includes()
-                if (index > -1) { // only splice array when item is found
+                console.log(basketId);
+                addItem = response.data.basket;
+                let item = basketId.includes(addItem);
+                console.log(item);
+                if (item) { // only splice array when item is found
                     console.log("item var");
                 }else{
                     basketId.push(response.data.basket);
-                }*/
-                basketId.push(response.data.basket);
-                //basketId = response.data.basket;
-                itemCount.textContent = basketCount;
-                //console.log(basketId);
-                $.cookie( "ids" , basketId , { expires: 15 });
-                $.cookie( "basketCount" , basketCount , { expires: 15 });
-                console.log( $.cookie( "ids") );
-                //console.log( $.cookie( "basketCount") );
+                    basketCount++;
+                    itemCount.textContent = basketCount;
+                    //console.log(basketId);
+                    $.cookie( "ids" , basketId , { expires: 15 });
+                    $.cookie( "basketCount" , basketCount , { expires: 15 });
+                    console.log( $.cookie( "ids") );
+                }
+
             })      
             
             
